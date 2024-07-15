@@ -1,5 +1,6 @@
 from src import masks
 
+
 def mask_account_card(string: str) -> str:
     """Функция маскирует номер счета и карты"""
     if "Cчет" in string:
