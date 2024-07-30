@@ -1,5 +1,5 @@
-card_number = input()
-account_number = input()
+#card_number = input()
+#account_number = input()
 
 
 def get_mask_card_number(card_number: str) -> str:
@@ -8,7 +8,6 @@ def get_mask_card_number(card_number: str) -> str:
         card_number[:4] + " " + card_number[4:6] + "** **** " + card_number[-4:]
     )
     return masked_card
-
 
 def get_mask_account(account_number: str) -> str:
     """Возвращает маскированные номера счетов"""
