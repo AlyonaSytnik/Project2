@@ -5,10 +5,10 @@ def mask_account_card(string: str) -> str:
     """Функция маскирует номер счета и карты"""
     if "Счет" in string:
         account = string[-20:]
-        return string[:len(string)-20] + masks.get_mask_account(account)
+        return string[: len(string) - 20] + masks.get_mask_account(account)
     else:
         number_card = string[-16:]
-        return string[:len(string) - 16] + masks.get_mask_card_number(number_card)
+        return string[: len(string) - 16] + masks.get_mask_card_number(number_card)
 
 
 def get_data(info_data: str) -> str:
