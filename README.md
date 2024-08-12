@@ -81,32 +81,117 @@ Visa Platinum 7000 79** **** 6361  # выход функции
 `[{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}, {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}]`
 ```
 
+### В модуле **generators.py** представлены 3 функции: ```filter_by_currency```, ```transaction_descriptions```и ```card_number_generator```. 
+
+### Функция ```filter_by_currency```
+Принимает на вход список словарей, представляющих транзакции. Возвращает 
+итератор, который поочередно выдает транзакции, где валюта операции 
+соответствует заданной (например, USD).
+
+```
+Пример использования функции
+
+usd_transactions = filter_by_currency(transactions, "USD")
+for _ in range(2):
+    print(next(usd_transactions))
+
+>>> {
+          "id": 939719570,
+          "state": "EXECUTED",
+          "date": "2018-06-30T02:08:58.425572",
+          "operationAmount": {
+              "amount": "9824.07",
+              "currency": {
+                  "name": "USD",
+                  "code": "USD"
+              }
+          },
+          "description": "Перевод организации",
+          "from": "Счет 75106830613657916952",
+          "to": "Счет 11776614605963066702"
+      }
+      {
+              "id": 142264268,
+              "state": "EXECUTED",
+              "date": "2019-04-04T23:20:05.206878",
+              "operationAmount": {
+                  "amount": "79114.93",
+                  "currency": {
+                      "name": "USD",
+                      "code": "USD"
+                  }
+              },
+              "description": "Перевод со счета на счет",
+              "from": "Счет 19708645243227258542",
+              "to": "Счет 75651667383060284188"
+       }
+
+```
+
+### Генератор ```transaction_descriptions```
+принимает список словарей с транзакциями и возвращает описание каждой операции по очереди.
+
+```
+Пример использования функции
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
+
+>>> Перевод организации
+    Перевод со счета на счет
+    Перевод со счета на счет
+    Перевод с карты на карту
+    Перевод организации
+```
+
+### Генератор ```card_number_generator```
+Dыдает номера банковских карт в формате 
+```XXXX XXXX XXXX XXXX```, где X  — цифра номера карты. Генератор может 
+сгенерировать номера карт в заданном диапазоне от 0000 0000 0000 0001 до 
+9999 9999 9999 9999.
+
+``` 
+Примеры использования функции
+for card_number in card_number_generator(1, 5):
+    print(card_number)
+
+>>> 0000 0000 0000 0001
+    0000 0000 0000 0002
+    0000 0000 0000 0003
+    0000 0000 0000 0004
+    0000 0000 0000 0005
+```
 # Тестирование функций
 
-```======================================================================================================= test session starts =======================================================================================================
+```
+=========================== test session starts ====================================
 platform win32 -- Python 3.12.3, pytest-8.3.2, pluggy-1.5.0
 rootdir: C:\Users\User\PycharmProjects\bank_mask
-configfile: pyproject.toml
-plugins: cov-5.0.0
-collected 18 items
+configfile: pyproject.toml                      
+plugins: cov-5.0.0                              
+collected 23 items
 
-tests\test_masks.py .......                                     [ 38%]
-tests\test_processing.py ....                                   [ 61%] 
-tests\test_widget.py .......                                    [100%]
+tests\test_generators.py .....                                        [ 21%]
+tests\test_masks.py .......                                           [ 52%]
+tests\test_processing.py ....                                         [ 69%]
+tests\test_widget.py .......                                          [100%]
 
 ---------- coverage: platform win32, python 3.12.3-final-0 -----------
 Name                       Stmts   Miss  Cover
 ----------------------------------------------
-src\masks.py                   6      0   100%
+src\__init__.py                0      0   100%
+src\generators.py             18      2    89%
 src\processing.py              9      0   100%
 src\widget.py                 11      0   100%
 tests\__init__.py              0      0   100%
-tests\conftest.py             16      4    75%
+tests\conftest.py             23      5    78%
+tests\test_generators.py      26      4    85%
 tests\test_masks.py            8      0   100%
 tests\test_processing.py       8      0   100%
 tests\test_widget.py           7      0   100%
 ----------------------------------------------
-TOTAL                         65      4    94%
+TOTAL                        116     11    91%
 
-=============== 18 passed in 0.18s ======================================= 
+
+============================ 23 passed in 0.21s =======================
 ```
