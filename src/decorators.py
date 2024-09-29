@@ -7,19 +7,20 @@ def log(filename=None):
             result = None
             ret = ""
             try:
-                time_1 = time()
+                time1 = time()
                 result = func(*args, **kwargs)
-                time_2 = time()
+                time2 = time()
                 ret += func.__name__ + " " + str(result) + "\n"
             except Exception as e:
-                ret += func.__name__ + f" error: {e}. Inputs: {args}, {kwargs}\n"
-
-            if filename is None:
-                print(ret)
-            else:
-                with open(filename, "w") as file:
-                    file.write(ret)
-                    file.close()
+                ret += func.__name__ + f" {type(e).__name__}: {e}. Inputs: {args}, {kwargs}\n"
+                raise
+            finally:
+                if filename is None:
+                    print(ret)
+                else:
+                    with open(filename, 'w') as file:
+                        file.write(ret)
+                        file.close()
 
             return result
 
