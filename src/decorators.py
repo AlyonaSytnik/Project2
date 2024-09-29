@@ -2,6 +2,7 @@ from datetime import time
 
 
 def log(filename=None):
+    '''Декоратор автоматически логирует начало и конец выполнения функции, а также ее результаты или возникшие ошибки'''
     def my_decorator(func):
         def wrapper(*args, **kwargs):
             result = None
