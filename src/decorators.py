@@ -12,13 +12,16 @@ def log(filename=None):
                 time2 = time()
                 ret += func.__name__ + " " + str(result) + "\n"
             except Exception as e:
-                ret += func.__name__ + f" {type(e).__name__}: {e}. Inputs: {args}, {kwargs}\n"
+                ret += (
+                    func.__name__
+                    + f" {type(e).__name__}: {e}. Inputs: {args}, {kwargs}\n"
+                )
                 raise
             finally:
                 if filename is None:
                     print(ret)
                 else:
-                    with open(filename, 'w') as file:
+                    with open(filename, "w") as file:
                         file.write(ret)
                         file.close()
 
