@@ -7,9 +7,9 @@ def financial_transactions(path):
         with open(path, encoding='utf-8') as f:
             data = json.load(f)
     except FileNotFoundError:
-        return {}
+        return []
     except json.decoder.JSONDecodeError:
-        return {}
+        return []
     return data
 
 
