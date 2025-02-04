@@ -13,6 +13,7 @@ def financial_transactions(path):
     return data
 
 
+#print(financial_transactions("../data/operations_sample.json"))
 
 
 
