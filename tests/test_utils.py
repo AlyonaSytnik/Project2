@@ -9,8 +9,8 @@ from src.utils import financial_transactions
     "x, expected",
     [
         ("bad/path", []),
-        (os.path.dirname(__file__) + "/data/operations_empty.json", []),
-        (os.path.dirname(__file__) + "/data/operations_notlist.json", []),
+        (os.path.dirname(__file__) + "/../data/operations_empty.json", []),
+        (os.path.dirname(__file__) + "/../data/operations_notlist.json", []),
     ],
 )
 def test_financial_transactions(x: str, expected: list) -> None:
@@ -19,7 +19,7 @@ def test_financial_transactions(x: str, expected: list) -> None:
 
 def test_read_file_success() -> None:
     """Тестируем функцию read_file с валидным аргументом."""
-    assert financial_transactions(os.path.dirname(__file__) + "/data/operations_sample.json") == [
+    assert financial_transactions(os.path.dirname(__file__) + "/../data/operations_sample.json") == [
         {
             'id': 441945886,
             'state': 'EXECUTED',
